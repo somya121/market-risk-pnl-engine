@@ -1,0 +1,9 @@
+pandas
+numpy
+scipy
+matplotlib
+yfinance
+jupyter
+openpyxl
+pyyaml
+pytest
