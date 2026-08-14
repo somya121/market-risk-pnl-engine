@@ -1,0 +1,17 @@
+limits:
+
+  var_99:
+    warning: 75000
+    breach: 100000
+
+  expected_shortfall_99:
+    warning: 110000
+    breach: 150000
+
+  daily_loss:
+    warning: -100000
+    breach: -150000
+
+  stress_loss:
+    warning: -200000
+    breach: -300000
