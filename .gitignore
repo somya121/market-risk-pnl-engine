@@ -12,3 +12,5 @@ reports/*.csv
 reports/*.xlsx
 
 .vscode/
+
+.__iniyt__.py

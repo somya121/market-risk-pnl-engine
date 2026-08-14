@@ -1,0 +1,62 @@
+portfolio:
+  name: "RiskLens Trading Book"
+  base_currency: "USD"
+
+trades:
+
+  - trade_id: "EQ001"
+    instrument_type: "EQUITY"
+    underlying: "AAPL"
+    quantity: 1000
+
+  - trade_id: "EQ002"
+    instrument_type: "EQUITY"
+    underlying: "SPY"
+    quantity: -500
+
+  - trade_id: "EQ003"
+    instrument_type: "EQUITY"
+    underlying: "MSFT"
+    quantity: 750
+
+  - trade_id: "OPT001"
+    instrument_type: "EUROPEAN_CALL"
+    underlying: "AAPL"
+    quantity: 20
+    strike: 220.0
+    maturity: "2026-12-18"
+    volatility: 0.30
+    dividend_yield: 0.005
+
+  - trade_id: "OPT002"
+    instrument_type: "EUROPEAN_PUT"
+    underlying: "AAPL"
+    quantity: -15
+    strike: 200.0
+    maturity: "2026-12-18"
+    volatility: 0.30
+    dividend_yield: 0.005
+
+  - trade_id: "OPT003"
+    instrument_type: "EUROPEAN_CALL"
+    underlying: "SPY"
+    quantity: -10
+    strike: 600.0
+    maturity: "2026-12-18"
+    volatility: 0.20
+    dividend_yield: 0.012
+
+  - trade_id: "BND001"
+    instrument_type: "BOND"
+    underlying: "US10Y"
+    quantity: 5000000
+    coupon_rate: 0.040
+    maturity: "2036-12-18"
+    coupon_frequency: 2
+
+  - trade_id: "FX001"
+    instrument_type: "FX_FORWARD"
+    underlying: "EURUSD"
+    quantity: 2000000
+    strike: 1.1000
+    maturity: "2026-12-18"
