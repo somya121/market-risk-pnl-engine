@@ -17,6 +17,9 @@ from src.pricing.greeks import (
     option_greeks,
 )
 
+from src.fx_forward import (
+    forward_value,
+)
 
 def load_market_data():
 
@@ -454,8 +457,33 @@ def value_portfolio(valuation_date=None):
 
         elif instrument_type == "FX_FORWARD":
 
-            result["market_value"] = 0.0
+            strike = trade["strike"]
 
+            maturity = year_fraction(
+                valuation_date,
+                trade["maturity"],
+            )
+
+            domestic_rate = trade.get(
+                "domestic_rate",
+                rate,
+            )
+
+            foreign_rate = trade.get(
+                "foreign_rate",
+                0.0,
+            )
+
+            market_value = forward_value(
+                spot=spot,
+                strike=strike,
+                domestic_rate=domestic_rate,
+                foreign_rate=foreign_rate,
+                maturity=maturity,
+                notional=quantity,
+            )
+
+            result["market_value"] = market_value
             result["delta"] = quantity
 
         else:
