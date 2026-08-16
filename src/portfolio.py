@@ -29,6 +29,63 @@ def load_portfolio() -> pd.DataFrame:
 
     return portfolio
 
+def validate_instrument_fields(row):
+    instrument_type = row["instrument_type"]
+
+    required_fields = {
+        "EQUITY": [
+            "quantity",
+        ],
+
+        "EUROPEAN_CALL": [
+            "quantity",
+            "strike",
+            "maturity",
+            "volatility",
+            "dividend_yield",
+        ],
+
+        "EUROPEAN_PUT": [
+            "quantity",
+            "strike",
+            "maturity",
+            "volatility",
+            "dividend_yield",
+        ],
+
+        "BOND": [
+            "quantity",
+            "coupon_rate",
+            "maturity",
+            "coupon_frequency",
+        ],
+
+        "FX_FORWARD": [
+            "quantity",
+            "strike",
+            "maturity",
+        ],
+    }
+
+    if instrument_type not in required_fields:
+        raise ValueError(
+            f"Unsupported instrument type: {instrument_type}"
+        )
+
+    missing_fields = [
+        field
+        for field in required_fields[instrument_type]
+        if field not in row.index
+        or pd.isna(row[field])
+        or (isinstance(row[field], str) and not row[field].strip())
+    ]
+
+    if missing_fields:
+        raise ValueError(
+            f"{instrument_type} is missing required fields: "
+            f"{missing_fields}"
+        )
+
 def validate_portfolio(
     portfolio: pd.DataFrame,
 ) -> None:
@@ -66,6 +123,8 @@ def validate_portfolio(
         raise ValueError(
             "Zero quantity trade found."
         )
+    for _, row in portfolio.iterrows():
+        validate_instrument_fields(row)
 
     print("Portfolio validation: PASS")
 

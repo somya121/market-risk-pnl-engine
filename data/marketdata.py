@@ -4,9 +4,8 @@ import pandas as pd
 import yfinance as yf
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-
-RAW_DATA_DIR = PROJECT_ROOT /"market-risk-pnl-engine"/ "data" / "raw"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 
 RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
 

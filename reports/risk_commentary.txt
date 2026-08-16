@@ -1,1 +1,1 @@
-99% historical VaR is 92,151.25. 99% Expected Shortfall is 139,652.44. The worst observed daily P&L was -284,663.70. The worst configured stress scenario produced P&L of -434,787.92. There are 2 active risk-limit breaches requiring attention.
+99% historical VaR is 86,818.90. 99% Expected Shortfall is 128,987.73. The worst observed daily P&L was -237,048.68. The worst configured stress scenario produced P&L of -493,906.48. There are 2 active risk-limit breaches requiring attention.

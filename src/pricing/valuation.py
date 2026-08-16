@@ -254,7 +254,6 @@ def bond_dv01(
     years_to_maturity: float,
     coupon_frequency: int = 2,
 ):
-
     base_value = value_bond(
         face_value=face_value,
         coupon_rate=coupon_rate,
@@ -272,8 +271,8 @@ def bond_dv01(
     )
 
     dv01 = (
-        bumped_value
-        - base_value
+        base_value
+        - bumped_value
     )
 
     return dv01
@@ -288,16 +287,35 @@ def value_portfolio(valuation_date=None):
         valuation_date = get_valuation_date(
             market_data
         )
-    else:
-        valuation_date = pd.to_datetime(
-            valuation_date
+
+    elif isinstance(valuation_date, dict):
+        required_keys = {"year", "month", "day"}
+
+        if not required_keys.issubset(valuation_date.keys()):
+            raise ValueError(
+                "valuation_date dictionary must contain "
+                "'year', 'month', and 'day'."
+            )
+
+        valuation_date = pd.Timestamp(
+            year=int(valuation_date["year"]),
+            month=int(valuation_date["month"]),
+            day=int(valuation_date["day"]),
         )
 
-        if valuation_date not in market_data.index:
-            raise ValueError(
-                f"Valuation date {valuation_date} "
-                f"not found in market data."
-            )
+    else:
+        valuation_date = pd.to_datetime(
+            valuation_date,
+            dayfirst=True
+        )
+
+    valuation_date = pd.Timestamp(valuation_date).normalize()
+
+    if valuation_date not in market_data.index:
+        raise ValueError(
+            f"Valuation date {valuation_date} "
+            f"not found in market data."
+        )
     rate = get_risk_free_rate(
         market_data,
         valuation_date,
@@ -464,22 +482,22 @@ def value_portfolio(valuation_date=None):
                 trade["maturity"],
             )
 
-            domestic_rate = trade.get(
-                "domestic_rate",
-                rate,
-            )
+            domestic_rate = trade.get("domestic_rate")
 
-            foreign_rate = trade.get(
-                "foreign_rate",
-                0.0,
-            )
+            if pd.isna(domestic_rate):
+                domestic_rate = rate
+
+            foreign_rate = trade.get("foreign_rate")
+
+            if pd.isna(foreign_rate):
+                foreign_rate = 0.0
 
             market_value = forward_value(
                 spot=spot,
                 strike=strike,
                 domestic_rate=domestic_rate,
                 foreign_rate=foreign_rate,
-                maturity=maturity,
+                time_to_maturity=maturity,
                 notional=quantity,
             )
 
