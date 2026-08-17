@@ -25,8 +25,12 @@ def forward_value(
         time_to_maturity
     )
 
+    discount_factor = (
+        1 / (1 + domestic_rate) ** time_to_maturity
+    )
+
     value = (
         theoretical_forward - strike
-    ) * notional
+    ) * notional * discount_factor
 
     return value

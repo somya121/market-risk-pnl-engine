@@ -305,8 +305,7 @@ def value_portfolio(valuation_date=None):
 
     else:
         valuation_date = pd.to_datetime(
-            valuation_date,
-            dayfirst=True
+            valuation_date
         )
 
     valuation_date = pd.Timestamp(valuation_date).normalize()

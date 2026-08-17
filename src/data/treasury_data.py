@@ -5,7 +5,7 @@ import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-RAW_DATA_DIR = PROJECT_ROOT/"market-risk-pnl-engine" / "data" / "raw"
+RAW_DATA_DIR = PROJECT_ROOT/ "data" / "raw"
 
 
 TREASURY_SERIES = {

@@ -302,6 +302,21 @@ def calculate_pla_statistics(
         .sum()
     )
 
+    total_signed_pnl = (
+        result["actual_pnl"]
+        .sum()
+    )
+
+    total_signed_explained = (
+        result["explained_pnl"]
+        .sum()
+    )
+
+    total_signed_unexplained = (
+        result["unexplained_pnl"]
+        .sum()
+    )
+
     unexplained_ratio = (
         total_abs_unexplained
         / total_abs_pnl
@@ -309,17 +324,37 @@ def calculate_pla_statistics(
         else 0.0
     )
 
-    explained_ratio = (
+    explained_abs_ratio = (
         total_abs_explained
         / total_abs_pnl
         if total_abs_pnl != 0
         else 0.0
     )
 
+    signed_explained_ratio = (
+        total_signed_explained
+        / total_signed_pnl
+        if total_signed_pnl != 0
+        else 0.0
+    )
+
+    reconciliation_error = (
+        total_signed_pnl
+        - (
+            total_signed_explained
+            + total_signed_unexplained
+        )
+    )
+
     return {
         "total_abs_pnl": total_abs_pnl,
         "total_abs_explained_pnl": total_abs_explained,
         "total_abs_unexplained_pnl": total_abs_unexplained,
-        "explained_ratio": explained_ratio,
+        "explained_abs_ratio": explained_abs_ratio,
         "unexplained_ratio": unexplained_ratio,
+        "total_signed_pnl": total_signed_pnl,
+        "total_signed_explained_pnl": total_signed_explained,
+        "total_signed_unexplained_pnl": total_signed_unexplained,
+        "signed_explained_ratio": signed_explained_ratio,
+        "reconciliation_error": reconciliation_error,
     }

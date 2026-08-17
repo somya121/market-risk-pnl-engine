@@ -35,6 +35,10 @@ from src.risk.risk_commentary import (
     generate_commentary,
 )
 
+from src.data.data_quality import (
+    generate_quality_report,
+)
+
 from src.risk.pla import (
     calculate_pnl_attribution,
     calculate_pla_statistics,
@@ -56,11 +60,6 @@ REPORT_DIR = (
 
 def main():
 
-    REPORT_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
     print(
         "\nSTEP 1 - Portfolio validation"
     )
@@ -69,6 +68,27 @@ def main():
 
     validate_portfolio(
         portfolio
+    )
+    print(
+        "Portfolio validation: PASS"
+    )
+
+    print(
+        "\nSTEP 1A - Market data quality"
+    )
+
+    _, quality_status = (
+        generate_quality_report()
+    )
+
+    if quality_status != "PASS":
+        raise RuntimeError(
+            "Market data quality validation failed. "
+            "Portfolio valuation cannot proceed."
+        )
+
+    print(
+        "Market data quality: PASS"
     )
 
     print(
