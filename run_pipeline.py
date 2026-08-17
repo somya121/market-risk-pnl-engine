@@ -145,9 +145,13 @@ def main():
     )
 
     print(
-        pla_stats
+        "\nP&L ATTRIBUTION SUMMARY"
     )
 
+    for metric, value in pla_stats.items():
+        print(
+            f"{metric}: {value:,.6f}"
+        )
     print(
         "\nSTEP 9 - Dashboard metrics"
     )
